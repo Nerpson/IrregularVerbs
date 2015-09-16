@@ -29,6 +29,7 @@
 	$MAX_VERBS_A_TIME = 100;
 	$DEFAULT_NBVERBS = 5;
 	$nbVerbs = $DEFAULT_NBVERBS;
+	$content = '';
 
 
 
@@ -57,7 +58,7 @@
 		$req = $db->query('SELECT * FROM verbs WHERE id IN '.randoms($nbVerbs, $nb));
 
 		//outputing the html form
-		$content = '<form method="post" action="?correction"><table>
+		$content = '<form accept-charset="utf-8" method="post" action="?correction"><table>
 			<tr><th>French</th><th>Infinitive</th><th>Preterit</th><th>Past Participle</th>';
 
 		$i = 0;
@@ -72,7 +73,37 @@
 		$content .= '</table><input type="submit" value="Submit !" /></form>';
 
 	}elseif (isset($_GET['correction'])) {
-		
+		$i=0;
+		var_dump($_POST);
+		while(isset($_POST[$i.'-french']) && isset($_POST[$i.'-infinitive']) && isset($_POST[$i.'-preterit']) && isset($_POST[$i.'-pastPart'])){
+			$req = $db->query('SELECT * FROM verbs WHERE french='.htmlspecialchars($_POST[$i.'-french']));
+			var_dump($req);
+			$data = $req->fetch();
+			$content .= '<tr><td>'.$data['french'].'</td>';
+
+			//Infinitive
+			if(htmlspecialchars($_POST[$i.'-infinitive']) == $data['infinitive'])
+				$content .= '<td><input class="correct" type="text" value="'.$data['infinitive'].'"/></td>';
+			else
+				$content .= '<td><input class="wrong" type="text" value="'.htmlspecialchars($_POST[$i.'-infinitive']).'"/>
+			<input class="correct" type="text" value="'.$data['infinitive'].'"/></td>';
+
+			//Preterit
+			if(htmlspecialchars($_POST[$i.'-preterit']) == $data['preterit'])
+				$content .= '<td><input class="correct" type="text" value="'.$data['preterit'].'"/></td>';
+			else
+				$content .= '<td><input class="wrong" type="text" value="'.htmlspecialchars($_POST[$i.'-preterit']).'"/>
+			<input class="correct" type="text" value="'.$data['preterit'].'"/></td>';
+
+			//pastPart
+			if(htmlspecialchars($_POST[$i.'-pastPart']) == $data['pastPart'])
+				$content .= '<td><input class="correct" type="text" value="'.$data['pastPart'].'"/></td>';
+			else
+				$content .= '<td><input class="wrong" type="text" value="'.htmlspecialchars($_POST[$i.'-pastPart']).'"/>
+			<input class="correct" type="text" value="'.$data['pastPart'].'"/></td>';
+
+			$i++;
+		}
 	}else{
 		$content = '<form action="" method="GET">
 			<label for="nbVerbs">How many verbs to display a time ?</label>
@@ -102,6 +133,6 @@
 	<?php echo $content; ?>
 
 	</main>
-	<footer>Created by <a href="http://webmakers.fr">Webmakers.fr</a> and <a href="http://Jeneconnaispaslurl.com">Nerpson</a></footer>
+	<footer>Created by <a href="http://webmakers.fr">Webmakers.fr</a> and <a href="http://Jeneconnaispaslurl.com">Nerpson</a>.</footer>
 </body>
 </html>
