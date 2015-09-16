@@ -70,15 +70,20 @@
 			$i++;
 		}
 
-		$content .= '</table><input type="submit" value="Submit !" /></form>';
+		$content .= '</table>
+		<input type="hidden" value="'.$nbVerbs.'" id="nbVerbs" name="nbVerbs" />
+		<input type="submit" value="Submit !" /></form>';
 
+
+	// Correction
 	}elseif (isset($_GET['correction'])) {
 		$i=0;
-		var_dump($_POST);
+		$content = '<table>';
+		if(isset($_POST['nbVerbs']))
+			$nbVerbs=htmlspecialchars($_POST['nbVerbs']);
+
 		while(isset($_POST[$i.'-french']) && isset($_POST[$i.'-infinitive']) && isset($_POST[$i.'-preterit']) && isset($_POST[$i.'-pastPart'])){
-			$req = $db->query('SELECT * FROM verbs WHERE french='.htmlspecialchars($_POST[$i.'-french']));
-			var_dump($req);
-			$data = $req->fetch();
+			$data = $db->query('SELECT * FROM verbs WHERE french="'.htmlspecialchars($_POST[$i.'-french']).'"')->fetch();
 			$content .= '<tr><td>'.$data['french'].'</td>';
 
 			//Infinitive
@@ -104,6 +109,7 @@
 
 			$i++;
 		}
+		$content.='</table><a href="?nbVerbs='.$nbVerbs.'"><button>Give me more !!!</button></a>';
 	}else{
 		$content = '<form action="" method="GET">
 			<label for="nbVerbs">How many verbs to display a time ?</label>
