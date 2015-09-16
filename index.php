@@ -26,8 +26,9 @@
 
 
 	//DBCreation($db);
-	$MAX_VERBS_A_TIME = 20;
-	$nbVerbs = 5;
+	$MAX_VERBS_A_TIME = 100;
+	$DEFAULT_NBVERBS = 5;
+	$nbVerbs = $DEFAULT_NBVERBS;
 
 
 
@@ -42,6 +43,8 @@
 		$nbVerbs = htmlspecialchars($_GET['nbVerbs']);
 		if($nbVerbs > $MAX_VERBS_A_TIME)
 			$nbVerbs = $MAX_VERBS_A_TIME;
+		elseif ($nbVerbs < 1)
+			$nbVerbs = $DEFAULT_NBVERBS;
 
 
 		//To prevent my do...while loop to be infinite
@@ -59,17 +62,24 @@
 
 		$i = 0;
 		while($data = $req->fetch()){
-			$content .= '<tr><td>'.$data['french'].'</td>
-			<td><input type="text" id="'.$i.'-1" name="'.$i.'-1" /></td>
-			<td><input type="text" id="'.$i.'-2" name="'.$i.'-2" /></td>
-			<td><input type="text" id="'.$i.'-3" name="'.$i.'-3" /></td></tr>';
+			$content .= '<tr><td><input type="hidden" id="'.$i.'-french" name="'.$i.'-french" value="'.$data['french'].'" />'.$data['french'].'</td>
+			<td><input type="text" id="'.$i.'-infinitive" name="'.$i.'-infinitive" /></td>
+			<td><input type="text" id="'.$i.'-preterit" name="'.$i.'-preterit" /></td>
+			<td><input type="text" id="'.$i.'-pastPart" name="'.$i.'-pastPart" /></td></tr>';
 			$i++;
 		}
 
 		$content .= '</table><input type="submit" value="Submit !" /></form>';
 
 	}elseif (isset($_GET['correction'])) {
-		//Here you correct
+		
+	}else{
+		$content = '<form action="" method="GET">
+			<label for="nbVerbs">How many verbs to display a time ?</label>
+			<input type="number" id="nbVerbs" name="nbVerbs" value="'.$nbVerbs .'"/>
+
+			<input type="submit" value="Submit !" />
+		</form>';
 	}
 	
 
@@ -87,15 +97,7 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-	<header><h1>Tests aléatoires de verbes irréguliers</h1></header>
-	<section id="ask">
-		<form action="" method="GET">
-			<label for="nbVerbs">How many verbs to display a time ?</label>
-			<input type="number" id="nbVerbs" name="nbVerbs" value="<?php echo $nbVerbs; ?>"/>
-
-			<input type="submit" value="Submit !" />
-		</form>		
-	</section>
+	<header><h1><a href="/IrregularVerbs">Tests aléatoires de verbes irréguliers</a></h1></header>
 	<main>
 	<?php echo $content; ?>
 
