@@ -52,16 +52,24 @@
 
 		//Getting randoms verbs
 		$req = $db->query('SELECT * FROM verbs WHERE id IN '.randoms($nbVerbs, $nb));
-		while($data = $req->fetch()){
-			echo $data['french'], '<br>';
-		}
 
 		//outputing the html form
-		$form = '<form method="post" action="?correction">';
+		$content = '<form method="post" action="?correction"><table>
+			<tr><th>French</th><th>Infinitive</th><th>Preterit</th><th>Past Participle</th>';
 
-			
+		$i = 0;
+		while($data = $req->fetch()){
+			$content .= '<tr><td>'.$data['french'].'</td>
+			<td><input type="text" id="'.$i.'-1" name="'.$i.'-1" /></td>
+			<td><input type="text" id="'.$i.'-2" name="'.$i.'-2" /></td>
+			<td><input type="text" id="'.$i.'-3" name="'.$i.'-3" /></td></tr>';
+			$i++;
+		}
 
-		$form .= '<input type="submit" value="Submit !" /></form>';
+		$content .= '</table><input type="submit" value="Submit !" /></form>';
+
+	}elseif (isset($_GET['correction'])) {
+		//Here you correct
 	}
 	
 
@@ -80,17 +88,16 @@
 </head>
 <body>
 	<header><h1>Tests aléatoires de verbes irréguliers</h1></header>
-	<aside>
+	<section id="ask">
 		<form action="" method="GET">
 			<label for="nbVerbs">How many verbs to display a time ?</label>
 			<input type="number" id="nbVerbs" name="nbVerbs" value="<?php echo $nbVerbs; ?>"/>
 
 			<input type="submit" value="Submit !" />
-
 		</form>		
-	</aside>
+	</section>
 	<main>
-
+	<?php echo $content; ?>
 
 	</main>
 	<footer>Created by <a href="http://webmakers.fr">Webmakers.fr</a> and <a href="http://Jeneconnaispaslurl.com">Nerpson</a></footer>
