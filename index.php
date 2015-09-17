@@ -134,7 +134,7 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-	<header><h1><a href="/IrregularVerbs">Tests aléatoires de verbes irréguliers</a></h1></header>
+	<header><h1><a href="/">Tests aléatoires de verbes irréguliers</a></h1></header>
 	<main>
 	<?php echo $content; ?>
 
