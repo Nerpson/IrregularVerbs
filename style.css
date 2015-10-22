@@ -1,0 +1,93 @@
+html {
+	margin: 0;
+	padding: 0;
+	font-family: 'Tahoma';
+}
+
+body {
+	background-color: #EEE;
+}
+
+main {
+	margin: auto;
+	padding: 20px 5px;
+	width: 60%;
+	min-width: 400px;
+	background-color: white;
+	border-top: solid 2px #00A8FF;
+	box-shadow: #CCC 0 2px 0;
+}
+
+a {
+	transition: 0.2s all ease;
+	color: #00A8FF;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #10B8FF;
+}
+
+footer, header {
+	margin: auto;
+	width: 60%;
+	min-width: 400px;
+	text-align: center;
+}
+
+form table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+form table tr td {
+	margin: 0;
+	text-align: right;
+	border: solid 1px grey;
+}
+
+form table tr td:first-child {
+	width: 200px;
+	padding: 0 10px 2px 2px;
+	border: none;
+}
+
+form table tr td input {
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+form {
+	text-align: center;
+	width: 100%;
+}
+
+button.btn-submit, input.btn-submit {
+	transition: 0.2s all ease;
+	width: 200px;
+	height: 30px;
+	background-color: #00A8FF;
+	border: none;
+	box-shadow: #CCC 0 2px 0;
+	color: white;
+	font-size: 16px;
+}
+
+button.btn-submit:hover, input.btn-submit:hover {
+	background-color: #10B8FF;
+	box-shadow: #CCC 0 3px 0;
+}
+
+button.btn-submit:active, input.submit:active {
+	background-color: #00A8EF;
+	box-shadow: #AAA 0 0 0;
+}
+
+
+div.center {
+	margin-top: 20px;
+	text-align: center;
+}
